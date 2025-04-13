@@ -1,114 +1,98 @@
-﻿using System;
-using LibraryManagementSystem;
-using LibraryManagementSystem.BusinessLogic;
+﻿using LibraryManagementSystem.BusinessLogic;
+using System;
 
-public class Program
+namespace LibraryManagementSystem2
 {
-    static void Main(string[] args)
+    public class Program
     {
-
-        LibraryService libraryService = new LibraryService();
-        bool exit = false;
-
-        while (!exit)
+        static void Main(string[] args)
         {
-            Console.WriteLine("\n********** Library Management System **********");
-            Console.WriteLine("1. Add Book");
-            Console.WriteLine("2. View Books");
-            Console.WriteLine("3. Update Book");
-            Console.WriteLine("4. Delete Book");
-            Console.WriteLine("5. Exit");
-            Console.Write("Choose an option: ");
+            bool exit = false;
 
-            string choice = Console.ReadLine();
-
-            switch (choice)
+            while (!exit)
             {
-                case "1":
-                    AddBook(libraryService);
-                    break;
-                case "2":
-                    ViewBooks(libraryService);
-                    break;
-                case "3":
-                    UpdateBook(libraryService);
-                    break;
-                case "4":
-                    DeleteBook(libraryService);
-                    break;
-                case "5":
-                    Console.WriteLine("Exiting Library System...");
-                    exit = true;
-                    break;
-                default:
-                    Console.WriteLine("Invalid option! Please try again.");
-                    break;
+                Console.WriteLine("\n********** Library Management System **********");
+                Console.WriteLine("1. Add Book");
+                Console.WriteLine("2. View Books");
+                Console.WriteLine("3. Update Book");
+                Console.WriteLine("4. Delete Book");
+                Console.WriteLine("5. Exit");
+                Console.Write("Choose an option: ");
+
+                string choice = Console.ReadLine();
+
+                switch (choice)
+                {
+                    case "1":
+                        AddBook();
+                        break;
+                    case "2":
+                        ViewBooks();
+                        break;
+                    case "3":
+                        UpdateBook();
+                        break;
+                    case "4":
+                        DeleteBook();
+                        break;
+                    case "5":
+                        Console.WriteLine("Exiting Library System...");
+                        exit = true;
+                        break;
+                    default:
+                        Console.WriteLine("Invalid input.");
+                        break;
+                }
             }
         }
-    }
 
-    static void AddBook(LibraryService libraryService)
-    {
-        Console.Write("Enter Book Number: ");
-        int number = int.Parse(Console.ReadLine());
-        Console.Write("Enter Title: ");
-        string title = Console.ReadLine();
-        Console.Write("Enter Author: ");
-        string author = Console.ReadLine();
-        Console.Write("Enter Year: ");
-        int year = int.Parse(Console.ReadLine());
-
-        libraryService.AddBook(number, title, author, year);
-        Console.WriteLine("Book added successfully.");
-    }
-
-    static void ViewBooks(LibraryService libraryService)
-    {
-        var books = libraryService.GetBooks();
-
-        Console.WriteLine("\n--- Book List ---");
-        if (books.Count == 0)
+        static void AddBook()
         {
-            Console.WriteLine("No books available.");
+            Console.Write("Book No: ");
+            int num = int.Parse(Console.ReadLine());
+            Console.Write("Title: ");
+            string title = Console.ReadLine();
+            Console.Write("Author: ");
+            string author = Console.ReadLine();
+            Console.Write("Year: ");
+            int year = int.Parse(Console.ReadLine());
+
+            var book = LibraryProcess.CreateBook(num, title, author, year);
+            LibraryProcess.PerformAction(LibraryAction.Add, book);
+            Console.WriteLine("Book added!");
         }
-        else
+
+        static void ViewBooks()
         {
-            foreach (var book in books)
-            {
-                Console.WriteLine(book);
-            }
+            var books = LibraryProcess.GetBooks();
+            Console.WriteLine("\n--- Book List ---");
+            foreach (var b in books)
+                Console.WriteLine(b);
         }
-    }
 
-    static void UpdateBook(LibraryService libraryService)
-    {
-        Console.Write("Enter Book Number to update: ");
-        int number = int.Parse(Console.ReadLine());
+        static void UpdateBook()
+        {
+            Console.Write("Enter Book No to update: ");
+            int num = int.Parse(Console.ReadLine());
+            Console.Write("New Title: ");
+            string title = Console.ReadLine();
+            Console.Write("New Author: ");
+            string author = Console.ReadLine();
+            Console.Write("New Year: ");
+            int year = int.Parse(Console.ReadLine());
 
-        Console.Write("Enter new Title: ");
-        string newTitle = Console.ReadLine();
-        Console.Write("Enter new Author: ");
-        string newAuthor = Console.ReadLine();
-        Console.Write("Enter new Year: ");
-        int newYear = int.Parse(Console.ReadLine());
+            bool success = LibraryProcess.UpdateBook(num, title, author, year);
+            Console.WriteLine(success ? "Updated!" : "Book not found.");
+        }
 
-        bool success = libraryService.UpdateBook(number, newTitle, newAuthor, newYear);
-        if (success)
-            Console.WriteLine("Book updated successfully.");
-        else
-            Console.WriteLine("Book not found.");
-    }
+        static void DeleteBook()
+        {
+            Console.Write("Enter Book No to delete: ");
+            int num = int.Parse(Console.ReadLine());
 
-    static void DeleteBook(LibraryService libraryService)
-    {
-        Console.Write("Enter Book Number to delete: ");
-        int number = int.Parse(Console.ReadLine());
-
-        bool success = libraryService.DeleteBook(number);
-        if (success)
-            Console.WriteLine("Book deleted successfully.");
-        else
-            Console.WriteLine("Book not found.");
+            var book = LibraryProcess.CreateBook(num, "", "", 0);
+            LibraryProcess.PerformAction(LibraryAction.Delete, book);
+            Console.WriteLine("Book deleted if exists.");
+        }
     }
 }
-
