@@ -1,31 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using LibraryDataService;
+using System.Collections.Generic;
 
-namespace LibraryManagementSystem.BusinessLogic
+namespace LibraryManagementSystem_Service
 {
-    public class LibraryProcess
+    public static class LibraryProcess
     {
-        public class Book
-        {
-            public int BookNumber { get; set; }
-            public string Title { get; set; }
-            public string Author { get; set; }
-            public int Year { get; set; }
 
-            public Book(int number, string title, string author, int year)
-            {
-                BookNumber = number;
-                Title = title;
-                Author = author;
-                Year = year;
-            }
-
-            public override string ToString()
-            {
-                return $"Book No: {BookNumber}, Title: {Title}, Author: {Author}, Year: {Year}";
-            }
-        }
+        static BookDataService bookDataService = new BookDataService();
 
         public static List<Book> books = new List<Book>();
+
 
         public static void PerformAction(LibraryAction action, Book book = null)
         {
@@ -68,4 +52,4 @@ namespace LibraryManagementSystem.BusinessLogic
         }
     }
 }
-//ashley
+

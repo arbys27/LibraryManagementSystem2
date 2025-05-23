@@ -4,14 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LibraryManagementSystem.BusinessLogic
+namespace LibraryManagementSystem_Service
 {
         public enum LibraryAction
         {
             Add,
             View,
             Update,
-            Delete
+            Delete,
+            
         }
     }
 

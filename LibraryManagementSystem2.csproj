@@ -8,16 +8,22 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="LibraryCommon\**" />
+    <Compile Remove="LibraryDataService\**" />
     <Compile Remove="LibraryManagementSystem.BusinessLogic\**" />
     <Compile Remove="TemplateEngineHost\**" />
+    <EmbeddedResource Remove="LibraryCommon\**" />
+    <EmbeddedResource Remove="LibraryDataService\**" />
     <EmbeddedResource Remove="LibraryManagementSystem.BusinessLogic\**" />
     <EmbeddedResource Remove="TemplateEngineHost\**" />
+    <None Remove="LibraryCommon\**" />
+    <None Remove="LibraryDataService\**" />
     <None Remove="LibraryManagementSystem.BusinessLogic\**" />
     <None Remove="TemplateEngineHost\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="LibraryManagementSystem.BusinessLogic\LibraryManagementSystem.BusinessLogic.csproj" />
+    <ProjectReference Include="LibraryManagementSystem.BusinessLogic\LibraryManagementSystem_Service.csproj" />
   </ItemGroup>
 
 </Project>
