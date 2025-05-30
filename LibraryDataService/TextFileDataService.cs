@@ -7,8 +7,9 @@ namespace LibraryDataService
 {
     public class TextFileDataService : ILibraryDataService
     {
-        private readonly string filePath = "books.txt";
-        private List<Book> books = new();
+        string filePath = "books.txt";
+        List<Book> books = new List<Book>();
+
 
         public TextFileDataService()
         {
@@ -33,6 +34,7 @@ namespace LibraryDataService
         {
             var lines = books.Select(b => $"{b.BookNumber}|{b.Title}|{b.Author}|{b.Year}");
             File.WriteAllLines(filePath, lines);
+
         }
 
         public void AddBook(Book book)

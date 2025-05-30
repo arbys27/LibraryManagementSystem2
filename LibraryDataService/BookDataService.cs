@@ -5,13 +5,13 @@ namespace LibraryDataService
 {
     public class BookDataService
     {
-        private readonly ILibraryDataService dataService;
+        ILibraryDataService dataService;
 
         public BookDataService()
         {
 
-            dataService = new TextFileDataService(); // this is the currently used service
-            //dataService = new JSonFileDataService();
+            //dataService = new TextFileDataService();
+            dataService = new JsonFileDataService();
             //dataService = new LibraryDBDataService();
         }
 
