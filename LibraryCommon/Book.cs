@@ -23,7 +23,8 @@ namespace LibraryCommon
             {
                 return $"Book No: {BookNumber}, Title: {Title}, Author: {Author}, Year: {Year}";
             }
-            public int BookNumber { get; set; }
+            public Book() { }
+        public int BookNumber { get; set; }
             public string Title { get; set; }
             public string Author { get; set; }
             public int Year { get; set; }

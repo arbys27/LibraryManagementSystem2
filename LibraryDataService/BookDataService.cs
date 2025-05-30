@@ -9,8 +9,10 @@ namespace LibraryDataService
 
         public BookDataService()
         {
-            
-           // dataService = new TextFileDataService(); // this is the currently used service
+
+            dataService = new TextFileDataService(); // this is the currently used service
+            //dataService = new JSonFileDataService();
+            //dataService = new LibraryDBDataService();
         }
 
         public List<Book> GetAllBooks()
