@@ -7,8 +7,8 @@ namespace LibraryDataService
     {
         public void AddBook(Book book);
         List<Book> GetBooks();
-        public void UpdateBook(Book book);
-        void DeleteBook(Book book);
-        
+        public bool UpdateBook(Book book);
+        public bool DeleteBook(Book book);
+
     }
 }
