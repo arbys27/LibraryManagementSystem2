@@ -1,6 +1,5 @@
 ﻿using LibraryCommon;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace LibraryDataService
 {
@@ -9,15 +8,24 @@ namespace LibraryDataService
         private List<Book> books = new List<Book>();
 
         public void AddBook(Book book) => books.Add(book);
-        public List<Book> GetBooks() => books;
-        public void UpdateBook(Book updatedBook)
+
+        public List<Book> GetBooks() => new List<Book>(books);
+
+        public bool UpdateBook(Book updatedBook)
         {
             var index = books.FindIndex(b => b.BookNumber == updatedBook.BookNumber);
-            if (index != -1) books[index] = updatedBook;
+            if (index != -1)
+            {
+                books[index] = updatedBook;
+                return true;
+            }
+            return false;
+                
         }
-        public void DeleteBook(Book book)
+        public bool DeleteBook(int bookNumber)
         {
-            books.RemoveAll(b => b.BookNumber == book.BookNumber);
+            var removed = books.RemoveAll(b => b.BookNumber == bookNumber) > 0;
+            return removed;
         }
         
     }

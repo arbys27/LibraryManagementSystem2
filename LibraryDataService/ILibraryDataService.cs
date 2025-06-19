@@ -5,10 +5,10 @@ namespace LibraryDataService
 {
     public interface ILibraryDataService
     {
-        public void AddBook(Book book);
+        void AddBook(Book book);
         List<Book> GetBooks();
-        public bool UpdateBook(Book book);
-        public bool DeleteBook(Book book);
+        bool UpdateBook(Book book);
+        bool DeleteBook(int bookNumber);
 
     }
 }

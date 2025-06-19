@@ -8,7 +8,7 @@ namespace LibraryDataService
 {
     public class JsonFileDataService : ILibraryDataService
     {
-        string filePath = "books.json";
+        private readonly string filePath = "books.json";
         List<Book> books = new List<Book>();
 
         public JsonFileDataService()
@@ -38,23 +38,30 @@ namespace LibraryDataService
 
         public List<Book> GetBooks()
         {
-            return books;
+            return new List<Book>(books);
         }
 
-        public void UpdateBook(Book book)
+        public bool UpdateBook(Book book)
         {
             var index = books.FindIndex(b => b.BookNumber == book.BookNumber);
             if (index != -1)
             {
                 books[index] = book;
                 Save();
+                return true;
             }
+            return false;
         }
 
-        public void DeleteBook(int bookNumber)
+        public bool DeleteBook(int bookNumber)
         {
-            books.RemoveAll(b => b.BookNumber == bookNumber);
-            Save();
+            var removed = books.RemoveAll(b => b.BookNumber == bookNumber) > 0;
+            if (removed)
+            {
+                Save();
+                return true;
+            }
+           return false;
         }
 
         public void DeleteBook(Book book)

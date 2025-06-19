@@ -12,9 +12,9 @@ namespace LibraryCommon
 
         public Book() { }
 
-        public Book(int bookNumber, string title, string author, int year)
+        public Book(int number, string title, string author, int year)
         {
-            BookNumber = bookNumber;
+            BookNumber = number;
             Title = title;
             Author = author;
             Year = year;

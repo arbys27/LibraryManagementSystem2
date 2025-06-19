@@ -10,8 +10,8 @@ namespace LibraryDataService
         public BookDataService()
         {
 
-            //dataService = new TextFileDataService();
-            dataService = new JsonFileDataService();
+           // dataService = new TextFileDataService();
+           dataService = new JsonFileDataService();
             //dataService = new LibraryDBDataService();
         }
 
@@ -27,12 +27,12 @@ namespace LibraryDataService
 
         public void UpdateBook(Book book)
         {
-            dataService.UpdateBook(book);
+            dataService.UpdateBook(book);   
         }
 
         public void RemoveBook(Book book)
         {
-            dataService.DeleteBook(book);
+            dataService.DeleteBook(book.BookNumber);
         }
 
         
