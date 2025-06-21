@@ -19,7 +19,9 @@ namespace LibraryManagementSystem2
                 Console.WriteLine("2. View Books");
                 Console.WriteLine("3. Update Book");
                 Console.WriteLine("4. Delete Book");
-                Console.WriteLine("5. Exit");
+                Console.WriteLine("5. Borrow Book");
+                Console.WriteLine("6. Return Book");
+                Console.WriteLine("7. Exit");
                 Console.Write("Choose an option: ");
 
                 string choice = Console.ReadLine();
@@ -39,9 +41,16 @@ namespace LibraryManagementSystem2
                         DeleteBook();
                         break;
                     case "5":
+                        BorrowBook();
+                        break;
+                    case "6":
+                        ReturnBook();
+                        break;
+                    case "7":
                         Console.WriteLine("Exiting Library System...");
                         exit = true;
                         break;
+
                     default:
                         Console.WriteLine("Invalid input.");
                         break;
@@ -96,6 +105,24 @@ namespace LibraryManagementSystem2
             var book = LibraryProcess.CreateBook(num, "", "", 0);
             LibraryProcess.PerformAction(LibraryAction.Delete, book);
             Console.WriteLine("Book deleted if exists.");
+        }
+        
+        static void BorrowBook()
+        {
+            Console.Write("Enter Book No. to borrow: ");
+            int num = int.Parse(Console.ReadLine());
+            Console.Write("Enter your name: ");
+            string borrower = Console.ReadLine();
+            bool success = LibraryProcess.BorrowBook(num, borrower);
+            Console.WriteLine(success ? "Book Borrowed!" : "Borrowed failed. Book may already be borrowed.");
+            
+        }
+        static void ReturnBook()
+        {
+            Console.Write("Enter Book No. to return: ");
+            int num = int.Parse(Console.ReadLine());
+            bool success = LibraryProcess.ReturnBook(num);
+            Console.WriteLine(success ? "Book Returned!" : "Returned failed. Book may not be borrowed.");
         }
     }
 }

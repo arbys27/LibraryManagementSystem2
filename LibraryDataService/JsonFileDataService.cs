@@ -15,7 +15,7 @@ namespace LibraryDataService
         {
             if (File.Exists(filePath))
             {
-                string json = File.ReadAllText(filePath);
+                var json = File.ReadAllText(filePath);
                 var loadedBooks = JsonSerializer.Deserialize<List<Book>>(json);
                 if (loadedBooks != null)
                 {
@@ -61,12 +61,8 @@ namespace LibraryDataService
                 Save();
                 return true;
             }
-           return false;
+            return false;
         }
 
-        public void DeleteBook(Book book)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

@@ -31,6 +31,9 @@ namespace LibraryDataService
                         Title = parts[1],
                         Author = parts[2],
                         Year = int.Parse(parts[3]),
+                        IsBorrowed = bool.Parse(parts[4]),
+                        BorrowedBy = parts[5],
+                        BorrowedDate = string.IsNullOrWhiteSpace(parts[6]) ? null : DateTime.Parse(parts[6])
                     };
                 }).ToList();
             }
@@ -38,7 +41,7 @@ namespace LibraryDataService
 
         private void SaveToFile()
         {
-            var lines = books.Select(b => $"{b.BookNumber}|{b.Title}|{b.Author}|{b.Year}");
+            var lines = books.Select(b => $"{b.BookNumber}|{b.Title}|{b.Author}|{b.Year}|{b.IsBorrowed}|{b.BorrowedBy}|{b.BorrowedDate}");
             File.WriteAllLines(filePath, lines);
 
         }
@@ -69,10 +72,13 @@ namespace LibraryDataService
         public bool DeleteBook(int bookNumber)
         {
             var removed = books.RemoveAll(b => b.BookNumber == bookNumber) > 0;
-            if (removed) SaveToFile();
-            
+            if (removed) 
+            {
+                SaveToFile();
+                return true;
+            }
               
-            return removed;
+            return false;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using LibraryDataService;
+﻿using LibraryCommon;
+using LibraryDataService;
 using System.Collections.Generic;
 
 namespace LibraryManagementSystem_Service
@@ -8,25 +9,30 @@ namespace LibraryManagementSystem_Service
 
         static BookDataService bookDataService = new BookDataService();
 
-        public static List<Book> books = new List<Book>();
-
-
         public static void PerformAction(LibraryAction action, Book book = null)
         {
             switch (action)
             {
                 case LibraryAction.Add:
                     if (book != null)
-                        books.Add(book);
+                        bookDataService.AddBook(book);
                     break;
+
                 case LibraryAction.Delete:
-                    books.RemoveAll(b => b.BookNumber == book.BookNumber);
+                    if (book != null)
+                        bookDataService.RemoveBook(book.BookNumber);
+                    break;
+
+                case LibraryAction.Update:
+                    if (book != null)
+                        bookDataService.UpdateBook(book);
                     break;
             }
         }
 
         public static List<string> GetBooks()
         {
+            var books = bookDataService.GetAllBooks();
             List<string> list = new List<string>();
             foreach (var b in books)
                 list.Add(b.ToString());
@@ -35,21 +41,57 @@ namespace LibraryManagementSystem_Service
 
         public static bool UpdateBook(int bookNumber, string title, string author, int year)
         {
-            Book book = books.Find(b => b.BookNumber == bookNumber);
-            if (book != null)
+            var book = new Book 
             {
-                book.Title = title;
-                book.Author = author;
-                book.Year = year;
-                return true;
+                BookNumber = bookNumber,
+                Title = title,
+                Author = author,
+                Year = year
+            };
+            return bookDataService.UpdateBook(book);
+        }
+
+        public static bool BorrowBook(int bookNumber, string borrower)
+        {
+            var book = bookDataService.GetAllBooks().FirstOrDefault(b => b.BookNumber == bookNumber);
+            if (book != null && !book.IsBorrowed)
+            {
+                book.IsBorrowed = true;
+                book.BorrowedBy = borrower;
+                book.BorrowedDate = DateTime.Now;
+                return bookDataService.UpdateBook(book);
+            }
+            return false;
+        }
+
+        public static bool ReturnBook(int bookNumber)
+        {
+            var book = bookDataService.GetAllBooks().FirstOrDefault(b => b.BookNumber == bookNumber);
+            if (book != null && book.IsBorrowed)
+            {
+                book.IsBorrowed = false;
+                book.BorrowedBy = string.Empty;
+                book.BorrowedDate = null;
+                return bookDataService.UpdateBook(book);
             }
             return false;
         }
 
         public static Book CreateBook(int number, string title, string author, int year)
         {
-            return new Book(number, title, author, year);
+            return new Book
+            {
+                BookNumber = number,
+                Title = title,
+                Author = author,
+                Year = year,
+                IsBorrowed = false,
+                BorrowedBy = string.Empty,
+                BorrowedDate = null
+            };
         }
     }
+
+
 }
 

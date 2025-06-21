@@ -5,14 +5,15 @@ namespace LibraryDataService
 {
     public class BookDataService
     {
-        ILibraryDataService dataService;
+        private ILibraryDataService dataService;
 
         public BookDataService()
         {
 
            // dataService = new TextFileDataService();
-           dataService = new JsonFileDataService();
+           //dataService = new JsonFileDataService();
             //dataService = new LibraryDBDataService();
+             dataService = new LibraryDBDataService();
         }
 
         public List<Book> GetAllBooks()
@@ -25,14 +26,14 @@ namespace LibraryDataService
             dataService.AddBook(book);
         }
 
-        public void UpdateBook(Book book)
+        public bool UpdateBook(Book book)
         {
-            dataService.UpdateBook(book);   
+            return dataService.UpdateBook(book);   
         }
 
-        public void RemoveBook(Book book)
+        public bool RemoveBook(int bookNumber)
         {
-            dataService.DeleteBook(book.BookNumber);
+            return dataService.DeleteBook(bookNumber);
         }
 
         

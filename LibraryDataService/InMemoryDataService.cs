@@ -11,12 +11,12 @@ namespace LibraryDataService
 
         public List<Book> GetBooks() => new List<Book>(books);
 
-        public bool UpdateBook(Book updatedBook)
+        public bool UpdateBook(Book book)
         {
-            var index = books.FindIndex(b => b.BookNumber == updatedBook.BookNumber);
+            var index = books.FindIndex(b => b.BookNumber == book.BookNumber);
             if (index != -1)
             {
-                books[index] = updatedBook;
+                books[index] = book;
                 return true;
             }
             return false;
