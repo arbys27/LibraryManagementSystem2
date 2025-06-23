@@ -11,14 +11,17 @@
     <Compile Remove="LibraryCommon\**" />
     <Compile Remove="LibraryDataService\**" />
     <Compile Remove="LibraryManagementSystem.BusinessLogic\**" />
+    <Compile Remove="LibraryUI\**" />
     <Compile Remove="TemplateEngineHost\**" />
     <EmbeddedResource Remove="LibraryCommon\**" />
     <EmbeddedResource Remove="LibraryDataService\**" />
     <EmbeddedResource Remove="LibraryManagementSystem.BusinessLogic\**" />
+    <EmbeddedResource Remove="LibraryUI\**" />
     <EmbeddedResource Remove="TemplateEngineHost\**" />
     <None Remove="LibraryCommon\**" />
     <None Remove="LibraryDataService\**" />
     <None Remove="LibraryManagementSystem.BusinessLogic\**" />
+    <None Remove="LibraryUI\**" />
     <None Remove="TemplateEngineHost\**" />
   </ItemGroup>
 

@@ -9,5 +9,5 @@
   <ItemGroup>
     <ProjectReference Include="..\LibraryDataService\LibraryDataService.csproj" />
   </ItemGroup>
-
+	
 </Project>

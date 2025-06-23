@@ -7,9 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibraryManagementSystem2", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibraryManagementSystem_Service", "LibraryManagementSystem.BusinessLogic\LibraryManagementSystem_Service.csproj", "{78503BA8-049A-4705-9310-D03C145DC980}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraryDataService", "LibraryDataService\LibraryDataService.csproj", "{58C42F2E-1DAE-42C2-84B9-E0B9BA3B3820}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibraryDataService", "LibraryDataService\LibraryDataService.csproj", "{58C42F2E-1DAE-42C2-84B9-E0B9BA3B3820}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraryCommon", "LibraryCommon\LibraryCommon.csproj", "{D143FB66-6330-482A-B311-63CE658F3A21}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibraryCommon", "LibraryCommon\LibraryCommon.csproj", "{D143FB66-6330-482A-B311-63CE658F3A21}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraryUI", "LibraryUI\LibraryUI.csproj", "{04D9DE90-FDEE-4216-995D-BC9D326F4602}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{D143FB66-6330-482A-B311-63CE658F3A21}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D143FB66-6330-482A-B311-63CE658F3A21}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D143FB66-6330-482A-B311-63CE658F3A21}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04D9DE90-FDEE-4216-995D-BC9D326F4602}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04D9DE90-FDEE-4216-995D-BC9D326F4602}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04D9DE90-FDEE-4216-995D-BC9D326F4602}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04D9DE90-FDEE-4216-995D-BC9D326F4602}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -9,28 +9,43 @@ namespace LibraryManagementSystem_Service
 
         static BookDataService bookDataService = new BookDataService();
 
-        public static void PerformAction(LibraryAction action, Book book = null)
+        public static List<Book> GetBooks()
+        {
+            return bookDataService.GetAllBooks();
+        }
+        public static bool PerformAction(LibraryAction action, Book book = null)
         {
             switch (action)
             {
                 case LibraryAction.Add:
                     if (book != null)
+                    {
                         bookDataService.AddBook(book);
+                        return true;
+                    }
+                        
                     break;
 
                 case LibraryAction.Delete:
                     if (book != null)
+                    {
                         bookDataService.RemoveBook(book.BookNumber);
+                    }
+                        
                     break;
 
                 case LibraryAction.Update:
                     if (book != null)
+                    {
                         bookDataService.UpdateBook(book);
+                        return true;
+                    }
                     break;
             }
+            return false;
         }
 
-        public static List<string> GetBooks()
+        public static List<string> GetAllBooks()
         {
             var books = bookDataService.GetAllBooks();
             List<string> list = new List<string>();
@@ -90,6 +105,7 @@ namespace LibraryManagementSystem_Service
                 BorrowedDate = null
             };
         }
+        
     }
 
 
