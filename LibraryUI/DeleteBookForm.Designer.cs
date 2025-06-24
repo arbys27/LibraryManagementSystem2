@@ -76,6 +76,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackgroundImage = Properties.Resources.ListBook;
             ClientSize = new Size(358, 189);
             Controls.Add(btnDelete);
             Controls.Add(txtBookNumber);

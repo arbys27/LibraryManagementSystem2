@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainDashboard));
             panel1 = new Panel();
             btnAddBook = new Button();
             btnDelete = new Button();
@@ -336,7 +335,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
+            BackgroundImage = Properties.Resources.LibraryBG;
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(1124, 624);
             Controls.Add(panel2);

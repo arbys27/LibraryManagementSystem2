@@ -138,6 +138,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackgroundImage = Properties.Resources.LibraryBG;
             ClientSize = new Size(391, 289);
             Controls.Add(btnUpdateBooks);
             Controls.Add(txtYear);

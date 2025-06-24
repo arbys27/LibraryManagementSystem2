@@ -29,11 +29,9 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BookListForm));
             txtSearch = new TextBox();
             label1 = new Label();
             dataGridViewBooks = new DataGridView();
-            libraryDBDataServiceBindingSource = new BindingSource(components);
             colBookNumber = new DataGridViewTextBoxColumn();
             colTitle = new DataGridViewTextBoxColumn();
             colAuthor = new DataGridViewTextBoxColumn();
@@ -41,6 +39,7 @@
             colIsBorrowed = new DataGridViewTextBoxColumn();
             colBorrowedBy = new DataGridViewTextBoxColumn();
             colBorrowedDate = new DataGridViewTextBoxColumn();
+            libraryDBDataServiceBindingSource = new BindingSource(components);
             ((System.ComponentModel.ISupportInitialize)dataGridViewBooks).BeginInit();
             ((System.ComponentModel.ISupportInitialize)libraryDBDataServiceBindingSource).BeginInit();
             SuspendLayout();
@@ -76,10 +75,6 @@
             dataGridViewBooks.ReadOnly = true;
             dataGridViewBooks.Size = new Size(740, 448);
             dataGridViewBooks.TabIndex = 2;
-            // 
-            // libraryDBDataServiceBindingSource
-            // 
-            libraryDBDataServiceBindingSource.DataSource = typeof(LibraryDataService.LibraryDBDataService);
             // 
             // colBookNumber
             // 
@@ -130,11 +125,15 @@
             colBorrowedDate.Name = "colBorrowedDate";
             colBorrowedDate.ReadOnly = true;
             // 
+            // libraryDBDataServiceBindingSource
+            // 
+            libraryDBDataServiceBindingSource.DataSource = typeof(LibraryDataService.LibraryDBDataService);
+            // 
             // BookListForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
+            BackgroundImage = Properties.Resources.ListBook;
             ClientSize = new Size(868, 596);
             Controls.Add(dataGridViewBooks);
             Controls.Add(label1);
