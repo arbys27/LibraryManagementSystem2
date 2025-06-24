@@ -23,7 +23,7 @@ namespace LibraryUI
 
         private void TxtSearch_TextChanged(object sender, EventArgs e)
         {
-            LoadBooks(txtSearch.Text); // Reload filtered books as you type
+            LoadBooks(txtSearch.Text); 
         }
         private void LoadBooks(string search = "")
         {

@@ -17,7 +17,7 @@ namespace LibraryUI
         }
         private void btnUpdate_Click(object sender, EventArgs e)
         {
-            UpdateBookForm updateBookForm = new UpdateBookForm();
+            btnUpdate updateBookForm = new btnUpdate();
             updateBookForm.ShowDialog();
         }
         private void btnDelete_Click(object sender, EventArgs e)
