@@ -1,113 +1,124 @@
-﻿using LibraryCommon;
-using LibraryDataService;
-using System.Collections.Generic;
+﻿    using LibraryCommon;
+    using LibraryDataService;
+    using System.Collections.Generic;
 
-namespace LibraryManagementSystem_Service
-{
-    public static class LibraryProcess
+    namespace LibraryManagementSystem_Service
     {
+        public static class LibraryProcess
+        {
 
-        static BookDataService bookDataService = new BookDataService();
+            static BookDataService bookDataService = new BookDataService();
+            static EmailService emailService = new EmailService();
 
         public static List<Book> GetBooks()
-        {
-            return bookDataService.GetAllBooks();
-        }
-        public static bool PerformAction(LibraryAction action, Book book = null)
-        {
-            switch (action)
             {
-                case LibraryAction.Add:
-                    if (book != null)
-                    {
-                        bookDataService.AddBook(book);
-                        return true;
-                    }
+                return bookDataService.GetAllBooks();
+            }
+            public static bool PerformAction(LibraryAction action, Book book = null)
+            {
+                switch (action)
+                {
+                    case LibraryAction.Add:
+                        if (book != null)
+                        {
+                            bookDataService.AddBook(book);
+                            return true;
+                        }
                         
-                    break;
+                        break;
 
-                case LibraryAction.Delete:
-                    if (book != null)
-                    {
-                        bookDataService.RemoveBook(book.BookNumber);
-                    }
+                    case LibraryAction.Delete:
+                        if (book != null)
+                        {
+                            bookDataService.RemoveBook(book.BookNumber);
+                        }
                         
-                    break;
+                        break;
 
-                case LibraryAction.Update:
-                    if (book != null)
-                    {
-                        bookDataService.UpdateBook(book);
-                        return true;
+                    case LibraryAction.Update:
+                        if (book != null)
+                        {
+                            bool updated = bookDataService.UpdateBook(book);
+                        if (updated) 
+                        {
+                            emailService.SendEmail(book.BookNumber.ToString());
+                        }
+                        return updated;
                     }
                     break;
+                }
+                return false;
             }
-            return false;
-        }
 
-        public static List<string> GetAllBooks()
-        {
-            var books = bookDataService.GetAllBooks();
-            List<string> list = new List<string>();
-            foreach (var b in books)
-                list.Add(b.ToString());
-            return list;
-        }
-
-        public static bool UpdateBook(int bookNumber, string title, string author, int year)
-        {
-            var book = new Book 
+            public static List<string> GetAllBooks()
             {
-                BookNumber = bookNumber,
-                Title = title,
-                Author = author,
-                Year = year
-            };
-            return bookDataService.UpdateBook(book);
-        }
-
-        public static bool BorrowBook(int bookNumber, string borrower)
-        {
-            var book = bookDataService.GetAllBooks().FirstOrDefault(b => b.BookNumber == bookNumber);
-            if (book != null && !book.IsBorrowed)
-            {
-                book.IsBorrowed = true;
-                book.BorrowedBy = borrower;
-                book.BorrowedDate = DateTime.Now;
-                return bookDataService.UpdateBook(book);
+                var books = bookDataService.GetAllBooks();
+                List<string> list = new List<string>();
+                foreach (var b in books)
+                    list.Add(b.ToString());
+                return list;
             }
-            return false;
-        }
 
-        public static bool ReturnBook(int bookNumber)
-        {
-            var book = bookDataService.GetAllBooks().FirstOrDefault(b => b.BookNumber == bookNumber);
-            if (book != null && book.IsBorrowed)
+            public static bool UpdateBook(int bookNumber, string title, string author, int year)
             {
-                book.IsBorrowed = false;
-                book.BorrowedBy = string.Empty;
-                book.BorrowedDate = null;
-                return bookDataService.UpdateBook(book);
+                var book = new Book 
+                {
+                    BookNumber = bookNumber,
+                    Title = title,
+                    Author = author,
+                    Year = year
+                };
+                bool updated = bookDataService.UpdateBook(book);
+
+            if (updated) 
+            {
+                emailService.SendEmail(book.BookNumber.ToString());
             }
-            return false;
+            return updated;
         }
 
-        public static Book CreateBook(int number, string title, string author, int year)
-        {
-            return new Book
+            public static bool BorrowBook(int bookNumber, string borrower)
             {
-                BookNumber = number,
-                Title = title,
-                Author = author,
-                Year = year,
-                IsBorrowed = false,
-                BorrowedBy = string.Empty,
-                BorrowedDate = null
-            };
-        }
+                var book = bookDataService.GetAllBooks().FirstOrDefault(b => b.BookNumber == bookNumber);
+                if (book != null && !book.IsBorrowed)
+                {
+                    book.IsBorrowed = true;
+                    book.BorrowedBy = borrower;
+                    book.BorrowedDate = DateTime.Now;
+                    return bookDataService.UpdateBook(book);
+                }
+                return false;
+            }
+
+            public static bool ReturnBook(int bookNumber)
+            {
+                var book = bookDataService.GetAllBooks().FirstOrDefault(b => b.BookNumber == bookNumber);
+                if (book != null && book.IsBorrowed)
+                {
+                    book.IsBorrowed = false;
+                    book.BorrowedBy = string.Empty;
+                    book.BorrowedDate = null;
+                    return bookDataService.UpdateBook(book);
+                }
+                return false;
+            }
+
+            public static Book CreateBook(int number, string title, string author, int year)
+            {
+                return new Book
+                {
+                    BookNumber = number,
+                    Title = title,
+                    Author = author,
+                    Year = year,
+                    IsBorrowed = false,
+                    BorrowedBy = string.Empty,
+                    BorrowedDate = null
+                };
+            }
         
+        }
+
+
     }
-
-
-}
 

@@ -8,7 +8,7 @@ namespace LibraryDataService
     public class LibraryDBDataService : ILibraryDataService
     {
         private static readonly string connectionString =
-            "Data Source=DESKTOP-3VFLO57\\SQLEXPRESS; Initial Catalog=LibraryDB; Integrated Security=True; TrustServerCertificate=True;";
+            "Data Source=DESKTOP-FF0FJBD\\SQLEXPRESS; Initial Catalog=librarydb; Integrated Security=True; TrustServerCertificate=True;";
 
         private static SqlConnection sqlConnection;
 
@@ -16,7 +16,7 @@ namespace LibraryDataService
         {
             sqlConnection = new SqlConnection(connectionString);
         }
-
+        
         public void AddBook(Book book)
         {
             var insertStatement = @"INSERT INTO Books (BookNumber, Title, Author, Year, IsBorrowed, BorrowedBy, BorrowedDate)
