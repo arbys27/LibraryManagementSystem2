@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using LibraryCommon;
+using LibraryManagementSystem_Service;
 
 namespace LibraryController.Controllers
 {
@@ -10,6 +11,12 @@ namespace LibraryController.Controllers
     public class LibrarySystemController : ControllerBase
     {
         private readonly LibraryDBDataService _dataService = new();
+        private readonly EmailService _emailService;
+
+        public LibrarySystemController(EmailService emailService)
+        {
+            _emailService = emailService;
+        }
 
         [HttpGet]
         public ActionResult<List<Book>> GetBooks()
@@ -28,14 +35,21 @@ namespace LibraryController.Controllers
         public IActionResult UpdateBook([FromBody] Book book)
         {
             bool result = _dataService.UpdateBook(book);
-            return result ? Ok("Updated") : NotFound("Book not found");
+
+            if (result)
+            {
+                _emailService.SendEmail(book.BookNumber.ToString(), book.Title, "recipient@example.com");
+                return Ok(new { message = $"Book #{book.BookNumber} updated successfully." });
+            }
+            return NotFound(new { message = "Book not found." });
         }
 
         [HttpDelete("{bookNumber}")]
         public IActionResult DeleteBook(int bookNumber)
         {
             bool result = _dataService.DeleteBook(bookNumber);
-            return result ? Ok("Deleted") : NotFound("Book not found");
+            return result ? Ok("Deleted") : NotFound("Book not found.");
+
         }
     }
 }

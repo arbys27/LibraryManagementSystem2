@@ -1,14 +1,27 @@
-﻿    using LibraryCommon;
-    using LibraryDataService;
-    using System.Collections.Generic;
+﻿using LibraryCommon;
+using LibraryDataService;
+using System.Collections.Generic;
+using System;
+using System.Linq;
+using Microsoft.Extensions.Configuration;
 
-    namespace LibraryManagementSystem_Service
+namespace LibraryManagementSystem_Service
     {
         public static class LibraryProcess
         {
+            private static readonly BookDataService bookDataService;
+            private static readonly EmailService emailService;
+        
+        static LibraryProcess()
+        {
+            var configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .Build();
 
-            static BookDataService bookDataService = new BookDataService();
-            static EmailService emailService = new EmailService();
+            bookDataService = new BookDataService();
+            emailService = new EmailService(configuration);
+        }
 
         public static List<Book> GetBooks()
             {
@@ -41,7 +54,7 @@
                             bool updated = bookDataService.UpdateBook(book);
                         if (updated) 
                         {
-                            emailService.SendEmail(book.BookNumber.ToString());
+                            emailService.SendEmail(book.BookNumber.ToString(), book.Title, "user@example.com");
                         }
                         return updated;
                     }
@@ -72,7 +85,7 @@
 
             if (updated) 
             {
-                emailService.SendEmail(book.BookNumber.ToString());
+                emailService.SendEmail(book.BookNumber.ToString(), book.Title, "user@example.com");
             }
             return updated;
         }

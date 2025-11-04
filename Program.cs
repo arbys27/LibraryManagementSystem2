@@ -8,15 +8,8 @@ namespace LibraryManagementSystem2
     {
         static void Main(string[] args)
         {
-            var email = new EmailService();
-            email.SendEmail("1001");
+            
 
-            Console.WriteLine("✅ Email sent! Check your Mailtrap inbox.");
-            Console.ReadLine();
-
-            bool exit = false;
-
-            while (!exit)
             {
                 Console.WriteLine("\n********** Library Management System **********");
                 Console.WriteLine("1. Add Book");
@@ -52,7 +45,6 @@ namespace LibraryManagementSystem2
                         break;
                     case "7":
                         Console.WriteLine("Exiting Library System...");
-                        exit = true;
                         break;
 
                     default:

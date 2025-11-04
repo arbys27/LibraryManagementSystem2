@@ -1,5 +1,8 @@
 ﻿using MailKit.Net.Smtp;
 using MimeKit;
+using MailKit.Security;
+using Microsoft.Extensions.Configuration;
+using LibraryCommon;
 
 
 namespace LibraryManagementSystem_Service
@@ -7,28 +10,33 @@ namespace LibraryManagementSystem_Service
 
     public class EmailService
     {
-        public void SendEmail(string bookNumber)
+        private readonly IConfiguration _configuration;
+        private readonly EmailSettings _settings;
+
+        public EmailService(IConfiguration configuration)
+        {
+            _configuration = configuration;
+
+            _settings = new EmailSettings();
+            _configuration.GetSection("EmailSettings").Bind(_settings);
+        }
+        public void SendEmail(string bookNumber, string title, string recipientEmail)
         {
             var message = new MimeMessage();
-            message.From.Add(new MailboxAddress("Library Transaction", "do-not-reply@library.com"));
-            message.To.Add(new MailboxAddress("Account Owner", "user@example.com"));
-            message.Subject = $"Book Update Notification";
+            message.From.Add(new MailboxAddress(_settings.FromName, _settings.FromEmail));
+            message.To.Add(new MailboxAddress("Library User", recipientEmail));
+            message.Subject = $"Book #{bookNumber} Updated";
             message.Body = new TextPart("plain")
             {
-                Text = $"Book #{bookNumber} was updated successfully."
+                Text = $"Book #{bookNumber} ({title}) was successfully updated."
             };
 
             using (var client = new SmtpClient())
             {
-                var smtpHost = "sandbox.smtp.mailtrap.io";
-                var smtpPort = 2525;
-                var tls = MailKit.Security.SecureSocketOptions.StartTls;
-                client.Connect(smtpHost, smtpPort, tls);
 
-                var userName = "8b0b41a73172a6"; 
-                var password = "08803f8b7dc76d";
+                client.Connect(_settings.SmtpHost, _settings.SmtpPort, SecureSocketOptions.StartTls);
 
-                client.Authenticate(userName, password);
+                client.Authenticate(_settings.SmtpUsername, _settings.SmtpPassword);
                 client.Send(message);
                 client.Disconnect(true);
             }
